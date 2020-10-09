@@ -8,7 +8,7 @@ const todoFilter = document.querySelector(".todo-filter");
 window.addEventListener("load", getTodos);
 todoButton.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteItem);
-todoFilter.addEventListener("click", filterTodos);
+todoFilter.addEventListener("change", filterTodos);
 
 // FUNCTIONS
 
