@@ -7,7 +7,7 @@ const todoFilter = document.querySelector(".todo-filter");
 // EVENTS
 window.addEventListener("load", getTodos);
 todoButton.addEventListener("click", addTodo);
-todoList.addEventListener("click", deleteItem);
+todoList.addEventListener("click", delete_and_checked_buttons);
 todoFilter.addEventListener("change", filterTodos);
 
 // FUNCTIONS
@@ -26,15 +26,13 @@ function addTodo(e) {
 
   // Check button
   const todo_checked = document.createElement("button");
+  todo_checked.classList.add("todo-check");
   todo_checked.innerHTML = `<i class="fa fa-check" aria-hidden="true"></i>`;
-  // Below function runs when the check button is clicked
-  checkButton(todo_checked, new_item, todo_list_elements);
 
   // Delete button
   const todo_delete = document.createElement("button");
+  todo_delete.classList.add("todo-delete");
   todo_delete.innerHTML = `<i class="fa fa-trash" aria-hidden="true"></i>`;
-  //   Delete the element when the button is clicked
-  deleteButton(todo_delete, todo_list_elements);
 
   // Append the check and delete buttons to the todo div element
   todo_list_elements.appendChild(todo_checked);
@@ -51,31 +49,26 @@ function addTodo(e) {
   todoInput.value = "";
 }
 
-// Toggle the delete button
-const deleteButton = (delete_btn, todo_items_container) => {
-  delete_btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    todo_items_container.classList.toggle("remove-item");
-    deleteFromLocalStorage(todo_items_container);
-  });
-};
-
-// Toggle the check button
-const checkButton = (check_btn, new_item, todo_list_container_element) => {
-  check_btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    new_item.classList.toggle("checked");
-    todo_list_container_element.classList.toggle("completed");
-  });
-};
-
 // Delete the todo div
-function deleteItem(e) {
+function delete_and_checked_buttons(e) {
   const item = e.target;
   const todoDiv = item.parentElement;
   todoDiv.addEventListener("animationend", () => {
     todoDiv.remove();
   });
+
+  // Toggle the delete button
+  if (item.classList[0] === "todo-delete") {
+    todoDiv.classList.toggle("remove-item");
+    deleteFromLocalStorage(todoDiv);
+  }
+
+  // Toggle the check button
+  if (item.classList[0] === "todo-check") {
+    console.log(todoDiv.childNodes[0]);
+    todoDiv.classList.toggle("completed");
+    todoDiv.childNodes[0].classList.toggle("checked");
+  }
 }
 
 // Filtering the todos
@@ -90,7 +83,7 @@ function filterTodos(e) {
         break;
 
       case "unchecked":
-        if (todo.classList.length === 1) {
+        if (!todo.classList.contains("completed")) {
           todo.style.display = "flex";
         } else {
           todo.style.display = "none";
@@ -98,7 +91,7 @@ function filterTodos(e) {
         break;
 
       case "checked":
-        if (todo.classList.length === 2) {
+        if (todo.classList.contains("completed")) {
           todo.style.display = "flex";
         } else {
           todo.style.display = "none";
@@ -129,6 +122,7 @@ function getTodos() {
   } else {
     todoItems = JSON.parse(localStorage.getItem("todo-items"));
   }
+
   todoItems.forEach((todo) => {
     //   Putting items from local storage into the div of todos
 
@@ -141,15 +135,17 @@ function getTodos() {
     new_item.innerText = todo;
     todo_list_elements.appendChild(new_item);
 
-    // Create the delete and Checked buttons
+    // Check button
     const todo_checked = document.createElement("button");
-    //   Add styling when the button is clicked
-    checkButton(todo_checked, new_item, todo_list_elements);
+    todo_checked.classList.add("todo-check");
     todo_checked.innerHTML = `<i class="fa fa-check" aria-hidden="true"></i>`;
+
+    // Delete button
     const todo_delete = document.createElement("button");
-    //   Delete the element when the button is clicked
-    deleteButton(todo_delete, todo_list_elements);
+    todo_delete.classList.add("todo-delete");
     todo_delete.innerHTML = `<i class="fa fa-trash" aria-hidden="true"></i>`;
+
+    // Append the check and delete buttons to the todo div element
     todo_list_elements.appendChild(todo_checked);
     todo_list_elements.appendChild(todo_delete);
 
