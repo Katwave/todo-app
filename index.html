@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kat Todo App</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>GET EM DONE</h1>
+      <br />
+      <div class="nav">
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="add-todo-container">
+      <form>
+        <input type="text" placeholder="Enter todo..." class="todo-input" />
+        <button type="submit" class="todo-button">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+        </button>
+      </form>
+
+      <div class="filter-todo">
+        <select class="todo-filter">
+          <option value="all">ALL</option>
+          <option value="checked">CHECKED</option>
+          <option value="unchecked">UNCHECKED</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="todo-container">
+      <ul class="todo-list"></ul>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

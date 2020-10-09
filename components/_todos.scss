@@ -1,0 +1,65 @@
+.todo-container {
+  width: 100%;
+  height: 60%;
+  overflow: auto;
+  background: transparent;
+  @include flexCenter(row);
+  align-items: flex-start;
+
+  .todo-list {
+    min-width: 30%;
+    max-width: 90%;
+    word-break: break-all;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    .todo-list-elements {
+      @include flexCenter(row);
+      margin-top: 8px;
+      background: #fff;
+      animation: slide 0.3s linear 1;
+      @keyframes slide {
+        0% {
+          transform: translate(0, -100px);
+        }
+        100% {
+          transform: translate(0px);
+        }
+      }
+
+      li {
+        flex: 1;
+        padding: 10px;
+        color: #111;
+        display: inline-block;
+        font-weight: 600;
+      }
+      button {
+        @include todoButtons();
+        i {
+          pointer-events: none;
+        }
+      }
+    }
+
+    // Toggle classes
+    .checked {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+    .remove-item {
+      animation: delete 0.3s linear 1;
+      @keyframes delete {
+        0% {
+          transform: scaleY(1);
+        }
+        100% {
+          transform: scaleY(0);
+          opacity: 0;
+        }
+      }
+      // display: none;
+    }
+  }
+}
